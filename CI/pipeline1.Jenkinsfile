@@ -14,17 +14,16 @@ pipeline {
                     return params.ANSIBLE_RUN ==~ /(?i)(Y|YES|T|TRUE|ON|RUN)/
                 }
             }
+
             steps {
-                ansiblePlaybook
-                    credentialsId: 'ansible',
-                    installation: 'ansible2.14',
+                ansiblePlaybook installation: 'ansible2.14',
                     inventory: '/projects/devops/ansible/inventory/local.lab/local.lab_hosts.yml',
                     playbook: '/projects/devops/ansible/playbooks/ecom/hosts_fix.yml',
+                    credentialsId: 'ansible',
                     extraVars: [
                         parameter: "${PARAM1}",
                         parameter2: "${PARAM2}"
-                        ],
-                    vaultTmpPath: ''
+                        ]
             }
         }
         stage('Trigger job2'){
